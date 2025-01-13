@@ -8,12 +8,15 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
-        // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
-
-        return []; // replace this return statement with your own
+    // Create the result array with the specified length
+        double[] mult = new double[length];
+    // Fill the array with multiples of the given number
+        for (int i = 0; i < length; i++)
+        {
+            mult[i] = number * (i + 1);
+        }
+        // Returns the populated array
+        return mult; 
     }
 
     /// <summary>
@@ -24,10 +27,16 @@ public static class Arrays
     /// Because a list is dynamic, this function will modify the existing data list rather than returning a new list.
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
-    {
-        // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+    {   //Amount to rotate using % 
+        amount = amount % data.Count;
+        //creating rotated list
+        List<int> rotated = new List<int>();
+        //fist part of the rotation
+        rotated.AddRange(data.GetRange(data.Count - amount, amount));
+        //second part of the rotation
+        rotated.AddRange(data.GetRange(0, data.Count - amount));
+        
+        return rotated; 
+
     }
 }
