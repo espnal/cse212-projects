@@ -22,3 +22,4 @@
         return stack.Count == 0;
     }
 }
+// Input: (a == 3 or (b == 5 and c == 6));

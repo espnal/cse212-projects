@@ -36,7 +36,8 @@ public static class Arrays
         //second part of the rotation
         rotated.AddRange(data.GetRange(0, data.Count - amount));
         
-        return rotated; 
+        data.Clear();
+        data.AddRange(rotated);
 
     }
 }
