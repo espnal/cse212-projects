@@ -20,10 +20,24 @@ public static class SetsAndMaps
     /// </summary>
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
+{
+    HashSet<string> wordSet = new HashSet<string>(words);
+    List<string> result = new List<string>();
+
+    foreach (string word in words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        string reversed = new string(word.Reverse().ToArray());
+
+        if (wordSet.Contains(reversed) && word != reversed)
+        {
+            result.Add($"{word} & {reversed}");
+            wordSet.Remove(word); 
+            wordSet.Remove(reversed);
+        }
     }
+
+    return result.ToArray();
+}
 
     /// <summary>
     /// Read a census file and summarize the degrees (education)
@@ -42,7 +56,23 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+                    if (fields.Length > 3) 
+        {
+            string degree = fields[3].Trim(); 
+
+            if (!string.IsNullOrEmpty(degree)) 
+            {
+                if (degrees.ContainsKey(degree))
+                {
+                    degrees[degree]++;
+                }
+                else
+                {
+                    degrees[degree] = 1;
+                }
+            }
+        }
+            
         }
 
         return degrees;
@@ -64,11 +94,58 @@ public static class SetsAndMaps
     /// Reminder: You can access a letter by index in a string by 
     /// using the [] notation.
     /// </summary>
-    public static bool IsAnagram(string word1, string word2)
+public static bool IsAnagram(string word1, string word2)
+{
+    // Remove spaces and convert both words to lower case to ignore case sensitivity
+    word1 = word1.Replace(" ", "").ToLower();
+    word2 = word2.Replace(" ", "").ToLower();
+
+    // If the lengths are different, they can't be anagrams
+    if (word1.Length != word2.Length)
     {
-        // TODO Problem 3 - ADD YOUR CODE HERE
         return false;
     }
+
+    // Create a dictionary to store the letter counts for word1
+    var anagram = new Dictionary<char, int>();
+
+    // Count occurrences of each character in word1
+    foreach (var letter in word1)
+    {
+        if (anagram.ContainsKey(letter))
+        {
+            anagram[letter]++;
+        }
+        else
+        {
+            anagram[letter] = 1;
+        }
+    }
+
+    // Decrease the count for each character in word2
+    foreach (var letter in word2)
+    {
+        if (anagram.ContainsKey(letter))
+        {
+            anagram[letter]--;
+        }
+        else
+        {
+            return false; // If a letter in word2 doesn't exist in word1, they aren't anagrams
+        }
+    }
+
+    // If all counts are zero, the words are anagrams
+    foreach (var count in anagram.Values)
+    {
+        if (count != 0)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 

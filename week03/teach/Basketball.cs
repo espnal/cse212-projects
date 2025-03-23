@@ -24,13 +24,22 @@ public class Basketball
         reader.SetDelimiters(",");
         reader.ReadFields(); // ignore header row
         while (!reader.EndOfData) {
+            // using a set get the top high players names
+            
             var fields = reader.ReadFields()!;
             var playerId = fields[0];
             var points = int.Parse(fields[8]);
+            if (players.ContainsKey(playerId))
+                players[playerId] += points;
+                else{
+                    players.Add(playerId, points);
+                }
         }
-
+        var playerNames = players.Keys.OrderByDescending(x => players[x]).Take(10).ToArray();
         Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
+        Console.WriteLine($"Top 10 players: {{{string.Join(", ", playerNames)}}}");
 
         var topPlayers = new string[10];
     }
+
 }
